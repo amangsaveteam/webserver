@@ -136,7 +136,8 @@ void threadpool<T>::run()
         if(!request)
             continue;
         //任务处理逻辑,0-->reactor,1-->proactor
-        if(0 == m_actor_model)
+        //***********已修改错误，需要使用异步io复用，使用同步无法接受信号，一直处于阻塞状态 */
+        if(1 == m_actor_model)
         {
             //检查任务状态0-->read,else-->write
             if(0 == request->m_state)
